@@ -1,0 +1,102 @@
+<body>
+  <div class="container">
+    <!-- {{> loginButtons}} -->
+    {{> NavigationBar}}
+    <!-- Accent-colored raised button with ripple -->
+  </div>
+</body>
+
+
+<template name="NavigationBar">
+
+  <!-- Always shows a header, even in smaller screens. -->
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+      <div class="mdl-layout__header-row">
+        <!-- Title -->
+        <span class="mdl-layout-title">PlussDentt</span>
+        <!-- Add spacer, to align navigation to the right -->
+        <div class="mdl-layout-spacer"></div>
+        <!-- Navigation. We hide it in small screens. -->
+        <nav class="mdl-navigation mdl-layout--large-screen-only">
+          <a class="mdl-navigation__link login__buttons" href="#"> {{> loginButtons}}</a>
+        </nav>
+      </div>
+    </header>
+    <div class="mdl-layout__drawer">
+      <nav class="mdl-navigation">
+          <a class="mdl-navigation__link" href="#"> {{> loginButtons}}</a>
+      </nav>
+    </div>
+  </div>
+
+</template>
+
+<template name="initialInfo">
+</template>
+
+<template name="questions">
+  <div class="mdl-grid" id="questions">
+    <div class="mdl-cell mdl-cell--12-col">
+
+      <div class="initial--info">
+        <h3> Datos Personales </h3>
+        <!-- Simple Textfield -->
+        <form action="#">
+          <div class="mdl-textfield mdl-js-textfield">
+            <input class="mdl-textfield__input" type="text" id="quiz--nombre">
+            <label class="mdl-textfield__label" for="sample1">Nombre...</label>
+          </div>
+          <br>
+          <div class="mdl-textfield mdl-js-textfield">
+            <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="quiz--rut">
+            <label class="mdl-textfield__label" for="sample2">Rut...</label>
+            <span class="mdl-textfield__error">Input is not a number!</span>
+          </div>
+          <br>
+          <div class="mdl-textfield mdl-js-textfield">
+            <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="quiz--telefono">
+            <label class="mdl-textfield__label" for="sample2">Teléfono...</label>
+            <span class="mdl-textfield__error">Input is not a number!</span>
+          </div>
+          <br>
+          <div class="mdl-textfield mdl-js-textfield">
+            <input class="mdl-textfield__input" type="text" id="quiz--email">
+            <label class="mdl-textfield__label" for="sample1">Email...</label>
+          </div>
+          <br>
+          <button class="mdl-button mdl-js-button mdl-button--raised" id="start--quiz">
+            Comenzar Encuesta
+          </button>
+        </form>
+      </div>
+
+      {{#each questions}}
+      <div class="question--unit">
+        <div class="question--unit__title">{{title}}</div>
+        <div class="question--unit__options">
+          {{#if isMultiple}}
+            {{#each options}}
+            <input type="radio" name={{this}}> {{this}}
+            {{/each}}
+          {{else}}
+            <form action="#">
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="sample4">
+                <label class="mdl-textfield__label" for="sample4">Number...</label>
+                <span class="mdl-textfield__error">Input is not a number!</span>
+              </div>
+            </form>
+          {{/if}}
+        </div>
+        <div class="question--unit__buttons">
+          <button class="mdl-button mdl-js-button mdl-button--fab
+            mdl-button--mini-fab mdl-button--colored next--question">
+            <i class="material-icons">forward</i>
+          </button>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</template>

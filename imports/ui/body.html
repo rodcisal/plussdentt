@@ -1,14 +1,18 @@
 <body>
-  <div class="container">
-    <!-- {{> loginButtons}} -->
-    {{> NavigationBar}}
-    <!-- Accent-colored raised button with ripple -->
-  </div>
 </body>
 
 
-<template name="NavigationBar">
+<template name="layout1">
+  <div class="container">
+    <!-- {{> loginButtons}} -->
+    {{> NavigationBar}}
+    {{ > Template.dynamic template=main}}
+    <!-- Accent-colored raised button with ripple -->
+  </div>
+</template>
 
+
+<template name="NavigationBar">
   <!-- Always shows a header, even in smaller screens. -->
   <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <header class="mdl-layout__header">
@@ -16,8 +20,14 @@
         <!-- Title -->
         <span class="mdl-layout-title">PlussDentt</span>
         <!-- Add spacer, to align navigation to the right -->
+        <span class="mdl-layout-title" id="userRole"> {{userRole}} </span>
         <div class="mdl-layout-spacer"></div>
         <!-- Navigation. We hide it in small screens. -->
+        {{#if isAdmin}}
+        <nav class="mdl-navigation mdl-layout--large-screen-only">
+          <a class="mdl-navigation__link login__buttons" href="/dashboard"> Dashboard</a>
+        </nav>
+        {{/if}}
         <nav class="mdl-navigation mdl-layout--large-screen-only">
           <a class="mdl-navigation__link login__buttons" href="#"> {{> loginButtons}}</a>
         </nav>
@@ -32,8 +42,61 @@
 
 </template>
 
-<template name="initialInfo">
+
+
+<template name="dashboard">
+  <div id="dashboard">
+    <div class="mdl-cell mdl-cell--12-col">
+      <div class="dashboard--promotoras">
+        <h3>Promotoras</h3>
+        {{> addPromotor}}
+        <table class="mdl-data-table mdl-js-data-table">
+          <thead>
+            <tr>
+              <th class="mdl-data-table__cell--non-numeric">Nombre Promotora</th>
+              <th>Encuestas realizadas</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each promotoras}}
+            <tr>
+              {{#each emails}}
+              <td class="mdl-data-table__cell--non-numeric">{{ address }}</td>
+              <td>{{ getQuizCount }}</td>
+              {{/each}}
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+
+      <br>
+
+      <div class="dashboard--responses">
+        <h3>GiftCards</h3>
+
+        <table class="mdl-data-table mdl-js-data-table">
+          <thead>
+            <tr>
+              <th class="mdl-data-table__cell--non-numeric">Email Promotora</th>
+              <th>Código</th>
+            </tr>
+          </thead>
+          <tbody>
+          {{#each questions}}
+          <tr>
+            <td class="mdl-data-table__cell--non-numeric">{{ promotorEmail }}</td>
+            <td>{{ giftCard }}</td>
+          </tr>
+          {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </template>
+
+
 
 <template name="questions">
   <div class="mdl-grid" id="questions">
@@ -42,7 +105,7 @@
       <div class="initial--info">
         <h3> Datos Personales </h3>
         <!-- Simple Textfield -->
-        <form action="#">
+        <form action="#" id="personal--info">
           <div class="mdl-textfield mdl-js-textfield">
             <input class="mdl-textfield__input" type="text" id="quiz--nombre">
             <label class="mdl-textfield__label" for="sample1">Nombre...</label>
@@ -76,22 +139,28 @@
         <div class="question--unit__title">{{title}}</div>
         <div class="question--unit__options">
           {{#if isMultiple}}
-            {{#each options}}
-            <input type="radio" name={{this}}> {{this}}
-            {{/each}}
+            <div class="question--unit__wraper">
+              {{#each options}}
+              <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect">
+                <input type="radio" class="mdl-radio__button" name={{../number}} value={{this}}>
+                <span class="mdl-radio__label">{{this}}</span>
+              </label>
+              <br>
+              {{/each}}
+            </div>
           {{else}}
             <form action="#">
               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                 <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="sample4">
-                <label class="mdl-textfield__label" for="sample4">Number...</label>
-                <span class="mdl-textfield__error">Input is not a number!</span>
+                <label class="mdl-textfield__label" for="sample4">Cantidad ...</label>
+                <span class="mdl-textfield__error">Ingresar cantidad numérica!</span>
               </div>
             </form>
           {{/if}}
         </div>
         <div class="question--unit__buttons">
           <button class="mdl-button mdl-js-button mdl-button--fab
-            mdl-button--mini-fab mdl-button--colored next--question">
+            mdl-button--big-fab mdl-button--colored next--question">
             <i class="material-icons">forward</i>
           </button>
         </div>
@@ -99,4 +168,44 @@
       {{/each}}
     </div>
   </div>
+</template>
+
+
+<template name="notAuthenticated">
+  <div id="dashboard" class="with-logo">
+    <h1> Login Please </h1>
+    {{> loginButtons}}
+  </div>
+</template>
+
+<template name="notAdmin">
+  <div id="dashboard">
+    <h1> Not Admin </h1>
+  </div>
+</template>
+
+<template name="thanks">
+  <div id="dashboard">
+    <h1> Gracias! </h1>
+    <h3> Recibirá una Gift Card al email {{emailEntrevistado}} </h3>
+  </div>
+</template>
+
+<template name="addPromotor">
+<div class="add--promotor">
+  <div class="mdl-textfield mdl-js-textfield">
+    <input class="mdl-textfield__input" type="text" id="promotor--email">
+    <label class="mdl-textfield__label" for="sample1">Email</label>
+  </div>
+
+  <div class="mdl-textfield mdl-js-textfield">
+    <input class="mdl-textfield__input" type="text" id="promotor--password">
+    <label class="mdl-textfield__label" for="sample1">Password</label>
+  </div>
+
+  <button class="mdl-button mdl-js-button mdl-button--raised" id="create--promotor">
+    Crear Promotor
+  </button>
+</div>
+
 </template>

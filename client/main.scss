@@ -16,13 +16,16 @@
   }
 }
 
-#questions {
+#questions, #dashboard {
+  padding: 0;
   padding-top: 100px;
 }
 
 .question--unit {
   height: 100vh;
   width: 100%;
+  background: #f44336;
+  color: #fff;
 }
 
 .question--unit__title {
@@ -32,7 +35,7 @@
 }
 
 .question--unit__options {
-  padding-top: 5%;
+  padding-top: 10%;
   text-align: center;
 }
 
@@ -50,9 +53,78 @@
   text-align: center;
   padding-top: 15%;
   padding-bottom: 20%;
-
+  background-image: url(plussdentt-logo.svg);
+  background-repeat: no-repeat;
+  background-position: center 30px;
+  background-size: 200px;
 
   button {
     margin-top: 40px;
+  }
+}
+
+
+.question--unit__wraper {
+  font-size: 20px;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, 0);
+
+  label {
+    padding-bottom: 15px;
+  }
+
+  .mdl-radio__label {
+    font-size: 25px;
+  }
+}
+
+#dashboard {
+  text-align: center;
+
+
+Ç_¨cxz vbwith-logo {
+    background-image: url(plussdentt-logo.svg);
+    background-repeat: no-repeat;
+    background-position: center 30px;
+    padding-top: 250px;
+  }
+
+  table {
+    margin: 0 auto;
+  }
+}
+
+
+#userRole {
+  position: absolute;
+  right: 30%;
+}
+
+.mdl-layout__drawer.is-visible {
+  width: 330px;
+}
+
+.mdl-cell {
+  margin: 0;
+}
+
+.mdl-button--fab.mdl-button--colored {
+  background: #4caf50;
+}
+
+.mdl-button--fab.mdl-button--colored:hover {
+  background: #8bc34a;
+}
+
+
+.mdl-layout__header {
+  background: #005a5a;
+}
+
+.add--promotor {
+  margin: 20px 0;
+  .mdl-textfield {
+    margin-right: 15px;
   }
 }

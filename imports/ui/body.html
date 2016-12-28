@@ -136,26 +136,28 @@
 
       {{#each questions}}
       <div class="question--unit">
-        <div class="question--unit__title">{{title}}</div>
-        <div class="question--unit__options">
+        <div class="question--unit__title">{{number}}. {{title}}</div>
+        <div class="question--unit__options {{type}}">
           {{#if isMultiple}}
             <div class="question--unit__wraper">
               {{#each options}}
               <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect">
-                <input type="radio" class="mdl-radio__button" name={{../number}} value={{this}}>
-                <span class="mdl-radio__label">{{this}}</span>
+                <input type="radio" class="mdl-radio__button" name={{../number}} value={{value}}>
+                <span class="mdl-radio__label">{{option}}</span>
               </label>
               <br>
               {{/each}}
             </div>
           {{else}}
-            <form action="#">
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="sample4">
-                <label class="mdl-textfield__label" for="sample4">Cantidad ...</label>
-                <span class="mdl-textfield__error">Ingresar cantidad numérica!</span>
-              </div>
-            </form>
+            <div class="question--unit__wraper">
+            {{#each options}}
+              <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect checkbox--total" for="checkbox-{{option}}">
+                <div style="visibility:hidden;" data-factors={{JSONfactors}} class="checkbox--sibling"></div>
+                <input type="checkbox" id="checkbox-{{option}}" class="mdl-checkbox__input checkbox--input" value={{value}}>
+                <span class="mdl-checkbox__label">{{option}}</span>
+              </label>
+            {{/each}}
+            </div>
           {{/if}}
         </div>
         <div class="question--unit__buttons">
@@ -188,6 +190,33 @@
   <div id="dashboard">
     <h1> Gracias! </h1>
     <h3> Recibirá una Gift Card al email {{emailEntrevistado}} </h3>
+    <br>
+    <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--12-col">
+        <table class="mdl-data-table mdl-js-data-table results--table">
+          <thead>
+            <tr>
+              <th class="mdl-data-table__cell--non-numeric">Especialidad</th>
+              <th>Riesgo</th>
+              <th>Perfil</th>
+              <th>Tratamientos Asociados</th>
+              <th>Cuidados</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each results}}
+            <tr>
+              <td class="mdl-data-table__cell--non-numeric">{{ specialty }}</td>
+              <td>{{ risk }}</td>
+              <td>{{ profile }}</td>
+              <td>{{ treatment }}</td>
+              <td>{{ care }}</td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </template>
 

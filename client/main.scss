@@ -26,6 +26,14 @@
   width: 100%;
   background: #f44336;
   color: #fff;
+
+  &:nth-child(2n) {
+    background: #48cfad;
+  }
+
+  &:nth-child(2n+1) {
+    background: #3bafda;
+  }
 }
 
 .question--unit__title {
@@ -37,6 +45,23 @@
 .question--unit__options {
   padding-top: 10%;
   text-align: center;
+
+  &.checkbox {
+    text-align: left;
+
+    .question--unit__wraper {
+      width: 150px;
+    }
+  }
+
+  .mdl-checkbox__label {
+    font-size: 25px;
+    line-height: 25px;
+  }
+
+  .mdl-checkbox {
+    margin: 5px 0;
+  }
 }
 
 .question--unit__buttons {
@@ -47,6 +72,7 @@
 .mdl-button--fab.mdl-button--colored {
   position: relative;
   z-index: 2;
+  background: #4285f4;
 }
 
 .initial--info {
@@ -90,7 +116,7 @@
     padding-top: 250px;
   }
 
-  table {
+  table:not(.results--table) {
     margin: 0 auto;
   }
 }
@@ -110,11 +136,11 @@
 }
 
 .mdl-button--fab.mdl-button--colored {
-  background: #4caf50;
+  background: #2775d1;
 }
 
 .mdl-button--fab.mdl-button--colored:hover {
-  background: #8bc34a;
+  background: #2775d1;
 }
 
 
@@ -126,5 +152,22 @@
   margin: 20px 0;
   .mdl-textfield {
     margin-right: 15px;
+  }
+}
+
+.mdl-data-table.mdl-js-data-table.results--table {
+  margin: 0 100px;
+  margin-bottom: 100px;
+  white-space: pre;           /* CSS 2.0 */
+  white-space: pre-wrap;      /* CSS 2.1 */
+  white-space: pre-line;      /* CSS 3.0 */
+  white-space: -pre-wrap;     /* Opera 4-6 */
+  white-space: -o-pre-wrap;   /* Opera 7 */
+  white-space: -moz-pre-wrap; /* Mozilla */
+  white-space: -hp-pre-wrap;  /* HP Printers */
+  word-wrap: break-word;      /* IE 5+ */
+
+  th, td {
+    text-align: center;
   }
 }

@@ -53,7 +53,7 @@ Template.questions.helpers({
 
 whatRisk = function(score){
   if ( score < 2 ) { return "Riesgo Bajo"}
-  if ( score >= 2 || score < 2.2 ) { return "Riesgo Medio"}
+  if ( score >= 2 && score < 2.2 ) { return "Riesgo Medio"}
   if ( score >= 2.2 ) { return "Riesgo Alto"}
 }
 
@@ -162,13 +162,16 @@ Template.questions.events({
 
         for ( specialty in results ) {
           const risk = results[specialty].toLowerCase().split(' ').join('-');
-          arrayResults.push({
-            specialty: specialty,
-            risk: results[specialty],
-            profile: returnProfile[specialty][risk]["perfil"],
-            treatment: returnProfile[specialty][risk]["tratamiento"],
-            care: returnProfile[specialty][risk]["cuidados"]
-          });
+          console.log(risk, specialty);
+          if ( returnProfile[specialty][risk] !== undefined ) {
+            arrayResults.push({
+              specialty: specialty,
+              risk: results[specialty],
+              profile: returnProfile[specialty][risk]["perfil"],
+              treatment: returnProfile[specialty][risk]["tratamiento"],
+              care: returnProfile[specialty][risk]["cuidados"]
+            });
+          }
         }
 
         Session.set('results', arrayResults);
@@ -304,7 +307,11 @@ Template.thanks.helpers({
   results() {
     return Session.get('results');
   }
-})
+});
+
+Template.thanks.onRendered(() => {
+  $('body').scrollTop(0);
+});
 
 
 Template.addPromotor.events({

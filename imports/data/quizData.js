@@ -240,7 +240,7 @@ export const QuizData = [
       {option: "Diabetes", value: 3, default: 1, factors: { "periodoncia" : 0.05 }},
       {option: "Pubertad", value: 3, default: 1, factors: { "caries": 0.03, "periodoncia": 0.03 } },
       {option: "Embarazo", value: 3, default: 1, factors: { "caries": 0.03, "periodoncia": 0.05 } },
-      {option: "Embarazo", value: 3, default: 1, factors: { "periodoncia": 0.03 } }
+      {option: "Menopausia", value: 3, default: 1, factors: { "periodoncia": 0.03 } }
     ],
     type: "checkbox"
   },

@@ -3,6 +3,7 @@ import { QuizData  } from '../data/quizData.js';
 import { Questions } from '../api/questions.js';
 import { Session } from 'meteor/session';
 import { FlowRouter } from 'meteor/kadira:flow-router';
+import { Random } from 'meteor/random';
 
 import './body.html';
 
@@ -51,10 +52,16 @@ Template.questions.helpers({
   }
 });
 
-whatRisk = function(score){
-  if ( score < 2 ) { return "Riesgo Bajo"}
-  if ( score >= 2 && score < 2.2 ) { return "Riesgo Medio"}
-  if ( score >= 2.2 ) { return "Riesgo Alto"}
+whatRisk = function(score, specialty){
+  const noMediumRisk = ["ortodoncia", "bruxismo", "blanqueamiento", "implantes-protesis"];
+  if ( noMediumRisk.indexOf(specialty) !== -1 ) {
+    if ( score < 2 ) { return "Riesgo Bajo"}
+    if ( score >= 2 && score < 2.2 ) { return "Riesgo Medio"}
+    if ( score >= 2.2 ) { return "Riesgo Alto"}
+  } else {
+    if ( score < 2.2 ) { return "Riesgo Bajo"}
+    if ( score >= 2.2 ) { return "Riesgo Alto"}
+  }
 }
 
 returnProfile ={
@@ -151,8 +158,8 @@ Template.questions.events({
         let totalScore = Session.get('totalScore');
 
         for ( prop in totalScore ) {
-          totalScore[prop] = whatRisk(totalScore[prop]);
-          console.log(totalScore[prop]);
+          console.log(`TOTAL SCORE ${totalScore[prop]}`, prop);
+          totalScore[prop] = whatRisk(totalScore[prop], prop);
         }
         Session.set('results', totalScore);
 
@@ -176,6 +183,13 @@ Template.questions.events({
 
         Session.set('results', arrayResults);
         console.log(Session.set('results', arrayResults));
+
+        if ( true ) {
+          Questions.update(
+            { _id: Session.get('questionsId') },
+            { $set: { responses: arrayResults }}
+          )
+        }
 
       // LAST ELEMENT IN LIST
       FlowRouter.go('/thanks');
@@ -234,12 +248,7 @@ Template.questions.events({
 
 
 
-      if ( true ) {
-        Questions.update(
-          { _id: Session.get('questionsId') },
-          { $push: { responses: questionObject }}
-        )
-      }
+
     }
   },
   'click #start--quiz'(event) {
@@ -265,8 +274,9 @@ Template.questions.events({
         promotorId: Meteor.userId(),
         promotorEmail: Meteor.user().emails[0].address,
         createdAt: Date.now(),
-        giftCard: Math.floor( Math.random() * 10000 )
+        giftCard: Random.id()
       });
+
 
       const questionsObject = Questions.findOne({ "personal_information.email": email });
       Session.set('questionsId', questionsObject._id);

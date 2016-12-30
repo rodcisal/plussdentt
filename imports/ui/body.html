@@ -152,7 +152,7 @@
             <div class="question--unit__wraper">
             {{#each options}}
               <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect checkbox--total" for="checkbox-{{option}}">
-                <div style="visibility:hidden;" data-factors={{JSONfactors}} class="checkbox--sibling"></div>
+                <div style="visibility:hidden;" data-factors={{JSONfactors}} class="checkbox--sibling" data-default={{default}}></div>
                 <input type="checkbox" id="checkbox-{{option}}" class="mdl-checkbox__input checkbox--input" value={{value}}>
                 <span class="mdl-checkbox__label">{{option}}</span>
               </label>

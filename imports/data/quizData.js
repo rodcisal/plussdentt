@@ -106,7 +106,7 @@ export const QuizData = [
       {option: "No", value: 1}
     ],
     factors: {
-      "caries": 0.1,
+      "caries": 0.05,
       "blanqueamiento": 0.5,
     }
   },
@@ -192,7 +192,7 @@ export const QuizData = [
       {option: "No", value: 1}
     ],
     factors: {
-      "periodoncia": 0.1,
+      "periodoncia": 0.05,
     }
   },
   {
@@ -230,7 +230,8 @@ export const QuizData = [
       {option: "Mas de 10", value: 3}
     ],
     factors: {
-      "periodoncia": 0.05
+      "periodoncia": 0.05,
+      "blanqueamiento": 0.5
     }
   },
   {

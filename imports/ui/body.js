@@ -54,7 +54,7 @@ Template.questions.helpers({
 
 whatRisk = function(score, specialty){
   const noMediumRisk = ["ortodoncia", "bruxismo", "blanqueamiento", "implantes-protesis"];
-  if ( noMediumRisk.indexOf(specialty) !== -1 ) {
+  if ( noMediumRisk.indexOf(specialty) === -1 ) {
     if ( score < 2 ) { return "Riesgo Bajo"}
     if ( score >= 2 && score < 2.2 ) { return "Riesgo Medio"}
     if ( score >= 2.2 ) { return "Riesgo Alto"}
@@ -221,10 +221,12 @@ Template.questions.events({
         } else {
           let objectTotal = $(event.currentTarget)
           .parents('.question--unit')
-          .find('input:checked')
+          .find('input')
           .each((key, elem) => {
-              const val = $(elem).val();
+              let val = $(elem).val();
               const factors = $(elem).siblings('.checkbox--sibling').data('factors');
+              const defaultValue = $(elem).siblings('.checkbox--sibling').data('default');
+              val = $(elem).is(':checked') ? val : defaultValue;
               for ( factor in factors ) {
                 totalScore[factor] = totalScore[factor] + (val * factors[factor]);
               }
